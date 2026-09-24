@@ -15,9 +15,10 @@ const { addNote, deleteNote, filteredNotes } = useNotes(searchTerm);
     <section class="flex flex-col gap-3">
       <h1 class="text-lg">Note Overview</h1>
       <SearchBar v-model="searchTerm" />
-      <div class="flex flex-col gap-3 ">
+      <div v-if="filteredNotes.length > 0" class="flex flex-col gap-3 ">
         <NoteCard v-for="note in filteredNotes" :key="note.id" :note="note" @remove="deleteNote" />
       </div>
+      <p v-else class="text-sm text-center">No notes to display.</p>
     </section>
   </main>
 </template>

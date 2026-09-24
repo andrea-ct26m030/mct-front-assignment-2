@@ -65,7 +65,7 @@ const removeTag = (tagIndex: number) => {
                         <button @click="removeTag(i)" class="px-1 cursor-pointer">x</button>
                     </TagItem>
                 </div>
-                <p v-else class="text-sm">No tags assigned.</p>
+                <p v-else class="text-sm text-center">No tags assigned.</p>
             </div>
         </div>
 
