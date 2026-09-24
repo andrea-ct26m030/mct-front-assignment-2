@@ -1,12 +1,7 @@
-<script setup>
-defineProps(['modelValue'])
-defineEmits(['update:modelValue'])
+<script setup lang="ts">
+const model = defineModel<string>()
 </script>
- 
+
 <template>
-  <input
-    :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
-    placeholder="Suchen ..."
-  >
+  <input v-model="model" class="border border-neutral-300 rounded-xl px-3 py-2 w-full" placeholder="Search notes..." />
 </template>

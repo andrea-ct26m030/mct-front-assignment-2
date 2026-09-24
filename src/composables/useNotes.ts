@@ -1,8 +1,8 @@
-import { computed } from 'vue'
+import { computed, type Ref } from 'vue'
 import { useLocalStorage } from './useLocalStorage.js'
 import type { Note } from '../types/notes.js'
 
-export function useNotes() {
+export function useNotes(searchTerm: Ref<string>) {
   const notes = useLocalStorage('quicknotes', []);
 
   function addNote(note: Note) {
@@ -13,12 +13,19 @@ export function useNotes() {
     notes.value = notes.value.filter(note => note.id !== id);
   }
 
-  function filteredNotes(term: string) {
-    
-    
+  const filteredNotes = computed<Note[]>(() => {
+    const term = searchTerm.value.trim().toLowerCase()
 
-    return computed(() => notes.value)
-  }
+    if (!term) {
+      return notes.value;
+    }
+
+    return notes.value.filter(note =>
+      note.title.toLowerCase().includes(term) ||
+      note.content.toLowerCase().includes(term) ||
+      note.tags.some((tag) => tag.toLowerCase().includes(term))
+    )
+  })
 
   return { notes, addNote, deleteNote, filteredNotes }
 }
